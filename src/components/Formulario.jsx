@@ -24,7 +24,7 @@ const Formulario = () => {
     //en el evento onChange en el FormControl necesito ir guardando lo que se escribe y el objeto form ira guardando ese valor en c/u de sus propiedades,
     const [form, setForm] = useState(valoresInicialesForm);
     //variable para guardar los objetos citas
-    const [listaCitas, setListaCitas] = useState([citasLocalStorage]);
+    const [listaCitas, setListaCitas] = useState(citasLocalStorage);
     //variable de estado de bootstrap para realizar las validaciones y controlar los inputs del form
     const [validated, setValidated] = useState(false);
 
@@ -42,14 +42,19 @@ const Formulario = () => {
     const handleBlur = () => {};
 
     const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
+        const formx = event.currentTarget;
+        if (formx.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
+        } else {
+            //guardo los datos del form (los datos de la cita (el objeto)) el el arreglo de objetos (listaCitas) utilizando el spread operator
+            setListaCitas(...listaCitas, form);
+            setForm(valoresInicialesForm);
         }
-
-        setValidated(true);
+        setValidated(true); //esto es una validacion de bootstrap
     };
+    const borrarCita = () => {};
+
     return (
         <>
             <section className="container">
@@ -238,7 +243,7 @@ const Formulario = () => {
                 <h3 className="display-6 text-center pt-3 my-1">Administra las citas aquí</h3>
                 <hr className="py-0 my-0 mx-5" />
                 <article className="container">
-                    <ListaCitas />
+                    <ListaCitas listaCitas={listaCitas} borrarCita={borrarCita} />
                 </article>
             </section>
         </>
