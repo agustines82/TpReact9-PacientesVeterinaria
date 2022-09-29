@@ -48,12 +48,17 @@ const Formulario = () => {
             event.stopPropagation();
         } else {
             //guardo los datos del form (los datos de la cita (el objeto)) el el arreglo de objetos (listaCitas) utilizando el spread operator
-            setListaCitas(...listaCitas, form);
+            setListaCitas([...listaCitas, form]);
             setForm(valoresInicialesForm);
         }
         setValidated(true); //esto es una validacion de bootstrap
     };
-    const borrarCita = () => {};
+    const borrarCita = (citax) => {
+        // hacer un arreglo nuevo sin la tarea a borrar
+        let listaCitas2 = listaCitas.filter((item) => item !== citax);
+        //actualizo el state
+        setListaCitas(listaCitas2);
+    };
 
     return (
         <>
@@ -138,7 +143,7 @@ const Formulario = () => {
                             <Form.Control
                                 name="ownPhone"
                                 required
-                                type="text"
+                                type="number"
                                 placeholder="155-123456"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
@@ -243,7 +248,7 @@ const Formulario = () => {
                 <h3 className="display-6 text-center pt-3 my-1">Administra las citas aquí</h3>
                 <hr className="py-0 my-0 mx-5" />
                 <article className="container">
-                    <ListaCitas listaCitas={listaCitas} borrarCita={borrarCita} />
+                    <ListaCitas listaCitass={listaCitas} borrarCita={borrarCita} />
                 </article>
             </section>
         </>
