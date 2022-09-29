@@ -4,12 +4,12 @@ const Cita = ({ objetoCita, borrarCita }) => {
         <>
             <article className="cards border rounded col-12 col-md-4 col-lg-5 my-3 mx-3 bg-light">
                 <aside className="card-bod ">
-                    <h5 className="car-title fs-7">Mascota:{objetoCita.petName}</h5>
-                    <p className="car-subtitle mb-2 text-muted fs-8">Dueño:{objetoCita.ownName}</p>
+                    <h5 className="car-title fs-7">Mascota: {objetoCita.petName}</h5>
+                    <p className="car-subtitle mb-2 text-muted fs-8">Dueño: {objetoCita.ownName}</p>
                     <ul className="list-group list-group-flush">
-                        <li className="list-group-item fs-7">Fecha:{objetoCita.apointmentDate}</li>
-                        <li className="list-group-item fs-7">Hora:{objetoCita.apointmentTime}</li>
-                        <li className="list-group-item fs-7">Sintoma:{objetoCita.petSymtom}</li>
+                        <li className="list-group-item fs-7">Fecha: {objetoCita.appointmentDate}</li>
+                        <li className="list-group-item fs-7">Hora: {objetoCita.appointmentDate}</li>
+                        <li className="list-group-item fs-7">Sintoma: {objetoCita.petSymptom}</li>
                     </ul>
                 </aside>
                 <aside className="text-center mb-2">

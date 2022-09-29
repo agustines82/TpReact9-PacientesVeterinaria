@@ -47,11 +47,10 @@ const Formulario = () => {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            //guardo los datos del form (los datos de la cita (el objeto)) el el arreglo de objetos (listaCitas) utilizando el spread operator
-            setListaCitas([...listaCitas, form]);
-            setForm(valoresInicialesForm);
         }
         setValidated(true); //esto es una validacion de bootstrap
+        //guardo los datos del form (los datos de la cita (el objeto)) el el arreglo de objetos (listaCitas) utilizando el spread operator
+        setListaCitas([...listaCitas, form]);
     };
     const borrarCita = (citax) => {
         // hacer un arreglo nuevo sin la tarea a borrar
@@ -248,7 +247,7 @@ const Formulario = () => {
                 <h3 className="display-6 text-center pt-3 my-1">Administra las citas aquí</h3>
                 <hr className="py-0 my-0 mx-5" />
                 <article className="container">
-                    <ListaCitas listaCitass={listaCitas} borrarCita={borrarCita} />
+                    <ListaCitas listaCitas={listaCitas} borrarCita={borrarCita} />
                 </article>
             </section>
         </>
