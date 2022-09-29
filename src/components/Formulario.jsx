@@ -19,14 +19,12 @@ const valoresInicialesForm = {
 };
 
 const Formulario = () => {
-    //variables del formulario
+    //en el evento onChange en el FormControl necesito ir guardando lo que se escribe y el objeto form ira guardando ese valor en c/u de sus propiedades,
     const [form, setForm] = useState(valoresInicialesForm);
-    //si bien bootstrap ya tiene validaciones NO HACE TODAS LAS VALIDACIONES QUE NOSOTROS QUEREMOS. por lo tanto para el manejo de los errores usaremos otro state que inicializaremos con un objeto vacio (si esta vacio entonces todo se valido bien / si contiene algo pues entonces hay un error):
-    const [errors, setErrors] = useState({});
-    //variable de estado de bootstrap para realizar las validaciones y controlar los errores
+
+    //variable de estado de bootstrap para realizar las validaciones y controlar los inputs del form
     const [validated, setValidated] = useState(false);
 
-    const handleChange = () => {};
     const handleBlur = () => {};
 
     const handleSubmit = (event) => {
@@ -55,11 +53,11 @@ const Formulario = () => {
                                 required
                                 type="text"
                                 placeholder="Nombre de tu mascota"
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 onBlur={handleBlur}
-                                onChange={handleChange}
                                 value={form.petName}
                             />
-                            <Form.Control.Feedback type="invalid">{errors.petName}</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">errors.petName</Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="4" controlId="validationCustom02">
                             <Form.Label>Tipo</Form.Label>
@@ -69,7 +67,7 @@ const Formulario = () => {
                                 type="text"
                                 placeholder="Tipo de animal"
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.petType}
                             />
                             <Form.Control.Feedback type="invalid">Detalle el tipo de animal que es la mascota</Form.Control.Feedback>
@@ -82,7 +80,7 @@ const Formulario = () => {
                                 type="number"
                                 placeholder="Edad"
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.petAge}
                             />
                             <Form.Control.Feedback type="invalid">Indique una edad aproximada</Form.Control.Feedback>
@@ -95,7 +93,7 @@ const Formulario = () => {
                                 as="textarea"
                                 placeholder="Sintomas"
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.petSymptom}
                             />
                             <Form.Control.Feedback type="invalid">Indica brevemente los sintomas que presenta</Form.Control.Feedback>
@@ -111,7 +109,7 @@ const Formulario = () => {
                                 type="text"
                                 placeholder="Nombre del dueño"
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.ownName}
                             />
                             <Form.Control.Feedback type="invalid">Indique el nombre del dueño de la mascota</Form.Control.Feedback>
@@ -124,7 +122,7 @@ const Formulario = () => {
                                 type="text"
                                 placeholder="155-123456"
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.ownPhone}
                             />
                             <Form.Control.Feedback type="invalid">Suministre un telefono de contacto</Form.Control.Feedback>
@@ -140,7 +138,7 @@ const Formulario = () => {
                                     aria-describedby="inputGroupPrepend"
                                     required
                                     onBlur={handleBlur}
-                                    onChange={handleChange}
+                                    onChange={(e) => setForm(e.target.value.toLowerCase())}
                                     value={form.ownEmail}
                                 />
                                 <Form.Control.Feedback type="invalid">Suministre email</Form.Control.Feedback>
@@ -154,7 +152,7 @@ const Formulario = () => {
                                 placeholder="Dirección"
                                 required
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.ownAdress}
                             />
                             <Form.Control.Feedback type="invalid">Indique la dirección donde vive con la mascota</Form.Control.Feedback>
@@ -167,7 +165,7 @@ const Formulario = () => {
                                 placeholder="Ciudad"
                                 required
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.ownCity}
                             />
                             <Form.Control.Feedback type="invalid">Indique la ciudad donde vive con la mascota.</Form.Control.Feedback>
@@ -180,7 +178,7 @@ const Formulario = () => {
                                 placeholder="Cod. Postal"
                                 required
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.ownZip}
                             />
                             <Form.Control.Feedback type="invalid">Indique el codigo postal donde vive con la mascota.</Form.Control.Feedback>
@@ -196,7 +194,7 @@ const Formulario = () => {
                                 type="date"
                                 placeholder="dd/mm/aaaa"
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.appointmentDate}
                             />
                             <Form.Control.Feedback type="invalid">Indique el día que asistirá la mascota</Form.Control.Feedback>
@@ -209,7 +207,7 @@ const Formulario = () => {
                                 type="time"
                                 placeholder="hh:mm"
                                 onBlur={handleBlur}
-                                onChange={handleChange}
+                                onChange={(e) => setForm(e.target.value.toLowerCase())}
                                 value={form.appointmentTime}
                             />
                             <Form.Control.Feedback type="invalid">Indique el horario de atención</Form.Control.Feedback>
