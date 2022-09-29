@@ -52,9 +52,10 @@ const Formulario = () => {
         //guardo los datos del form (los datos de la cita (el objeto)) el el arreglo de objetos (listaCitas) utilizando el spread operator
         setListaCitas([...listaCitas, form]);
     };
-    const borrarCita = (citax) => {
+
+    const borrarCita = (objetoCita) => {
         // hacer un arreglo nuevo sin la tarea a borrar
-        let listaCitas2 = listaCitas.filter((item) => item !== citax);
+        let listaCitas2 = listaCitas.filter((item) => item !== objetoCita);
         //actualizo el state
         setListaCitas(listaCitas2);
     };
