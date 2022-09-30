@@ -8,7 +8,7 @@ const Cita = ({ objetoCita, borrarCita }) => {
                     <p className="car-subtitle mb-2 text-muted fs-8">Dueño: {objetoCita.ownName}</p>
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item fs-7">Fecha: {objetoCita.appointmentDate}</li>
-                        <li className="list-group-item fs-7">Hora: {objetoCita.appointmentDate}</li>
+                        <li className="list-group-item fs-7">Hora: {objetoCita.appointmentTime}</li>
                         <li className="list-group-item fs-7">Sintoma: {objetoCita.petSymptom}</li>
                     </ul>
                 </aside>
