@@ -81,7 +81,7 @@ const Formulario = () => {
                                 onBlur={handleBlur}
                                 value={form.petName}
                             />
-                            <Form.Control.Feedback type="invalid">errors.petName</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">Indique el Nombre al que responde el animal</Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="4" controlId="validationCustom02">
                             <Form.Label>Tipo</Form.Label>
