@@ -209,7 +209,7 @@ const Formulario = () => {
             });
         }
         setForm(valoresInicialesForm);
-        setValidated(true);
+        setValidated(false);
     };
 
     const borrarCita = (objetoCita) => {
