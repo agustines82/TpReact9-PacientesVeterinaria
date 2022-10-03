@@ -1,6 +1,7 @@
 import ListaCitas from "./ListaCitas";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 //variable para darle los valores iniciales al formulario:
 const valoresInicialesForm = {
@@ -39,18 +40,176 @@ const Formulario = () => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
-    const handleBlur = () => {};
+
+    //variables para controlar las leyendes en el efento on blur:
+    const [displayPetName, setDisplayPetName] = useState("");
+    const [displayPetType, setDisplayPetType] = useState("");
+    const [displayPetAge, setDisplayPetAge] = useState("");
+    const [displayPetSymptom, setDisplayPetSymptom] = useState("");
+    const [displayOwnName, setDisplayOwnName] = useState("");
+    const [displayOwnPhone, setDisplayOwnPhone] = useState("");
+    const [displayOwnEmail, setDisplayOwnEmail] = useState("");
+    const [displayOwnAdress, setDisplayOwnAdress] = useState("");
+    const [displayOwnCity, setDisplayOwnCity] = useState("");
+    const [displayOwnZip, setDisplayOwnZip] = useState("");
+    const [displayDate, setDisplayDate] = useState("");
+    const [displayTime, setDisplayTime] = useState("");
+
+    //validaciones de los input
+    const validarPetName = (petName) => {
+        let expReg = /^[a-zA-ZÀ-ÿ\s]{1,25}$/; // Letras y espacios, pueden llevar acentos.
+        if (expReg.test(petName.trim())) {
+            setDisplayPetName("none");
+            return true;
+        } else {
+            setDisplayPetName("block");
+            return false;
+        }
+    };
+
+    const validarType = (petType) => {
+        let expReg = /^[a-zA-ZÀ-ÿ\s]{3,20}$/;
+        if (expReg.test(petType)) {
+            setDisplayPetType("none");
+            return true;
+        } else {
+            setDisplayPetType("block");
+            return false;
+        }
+    };
+    const validarPetAge = (petAge) => {
+        let expReg = /^[0-9]{1,3}$/;
+        if (expReg.test(petAge) && petAge > 0) {
+            setDisplayPetAge("none");
+            return true;
+        } else {
+            setDisplayPetAge("block");
+            return false;
+        }
+    };
+    const validarSymptom = (petSymptom) => {
+        if (petSymptom.trim().length >= 5 && petSymptom.trim().length <= 80) {
+            setDisplayPetSymptom("none");
+            return true;
+        } else {
+            setDisplayPetSymptom("block");
+            return false;
+        }
+    };
+
+    const validarOwnName = (name) => {
+        let expReg = /^[a-zA-ZÀ-ÿ\s]{2,25}$/; // Letras y espacios, pueden llevar acentos.
+        if (expReg.test(name.trim())) {
+            setDisplayOwnName("none");
+            return true;
+        } else {
+            setDisplayOwnName("block");
+            return false;
+        }
+    };
+
+    const validarPhone = (phone) => {
+        let expReg = /^[0-9]{9,12}$/;
+        if (expReg.test(phone)) {
+            setDisplayOwnPhone("none");
+            return true;
+        } else {
+            setDisplayOwnPhone("block");
+            return false;
+        }
+    };
+
+    const validarEmail = (email) => {
+        let expReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+        if (expReg.test(email)) {
+            setDisplayOwnEmail("none");
+            return true;
+        } else {
+            setDisplayOwnEmail("block");
+            return false;
+        }
+    };
+
+    const validarAdress = (direccion) => {
+        if (direccion.trim().length >= 5 && direccion.trim().length <= 80) {
+            setDisplayOwnAdress("none");
+            return true;
+        } else {
+            setDisplayOwnAdress("block");
+            return false;
+        }
+    };
+    const validarCity = (city) => {
+        let expReg = /^[a-zA-ZÀ-ÿ\s]{3,20}$/; // Letras y espacios, pueden llevar acentos.
+        if (expReg.test(city.trim())) {
+            setDisplayOwnCity("none");
+            return true;
+        } else {
+            setDisplayOwnCity("block");
+            return false;
+        }
+    };
+    const validarZip = (zip) => {
+        let expReg = /^[0-9]{4}$/;
+        if (expReg.test(zip)) {
+            setDisplayOwnZip("none");
+            return true;
+        } else {
+            setDisplayOwnZip("block");
+            return false;
+        }
+    };
+
+    const validarDate = (date) => {
+        if (date.trim().length > 0) {
+            setDisplayDate("none");
+            return true;
+        } else {
+            setDisplayDate("block");
+            return false;
+        }
+    };
+
+    const validarTime = (time) => {
+        if (time.trim().length > 0) {
+            setDisplayTime("none");
+            return true;
+        } else {
+            setDisplayTime("block");
+            return false;
+        }
+    };
 
     const handleSubmit = (event) => {
-        const formx = event.currentTarget;
-        if (formx.checkValidity() === false) {
-            event.preventDefault();
+        event.preventDefault();
+
+        if (
+            validarPetName(form.petName) &&
+            validarPetAge(form.petAge) &&
+            validarType(form.type) &&
+            validarOwnName(form.ownName) &&
+            validarPhone(form.ownPhone) &&
+            validarEmail(form.ownEmail) &&
+            validarAdress(form.ownAdress) &&
+            validarCity(form.ownCity) &&
+            validarZip(form.ownZip) &&
+            validarDate(form.appointmentDate) &&
+            validarTime(form.appointmentTime)
+        ) {
+            setValidated(true);
+            //guardo los datos del form (los datos de la cita (el objeto)) el el arreglo de objetos (listaCitas) utilizando el spread operator
+            setListaCitas([...listaCitas, form]);
             event.stopPropagation();
         } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Algo va mal!",
+                footer: "Comprueba la carga de los datos",
+            });
         }
-        setValidated(true); //esto es una validacion de bootstrap
-        //guardo los datos del form (los datos de la cita (el objeto)) el el arreglo de objetos (listaCitas) utilizando el spread operator
-        setListaCitas([...listaCitas, form]);
+        setForm(valoresInicialesForm);
+        setValidated(true);
     };
 
     const borrarCita = (objetoCita) => {
@@ -78,10 +237,12 @@ const Formulario = () => {
                                 type="text"
                                 placeholder="Nombre de tu mascota"
                                 onChange={handleChange}
-                                onBlur={handleBlur}
+                                onBlur={() => validarPetName(form.petName)}
                                 value={form.petName}
                             />
-                            <Form.Control.Feedback type="invalid">Indique el Nombre al que responde el animal</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayPetName }}>
+                                Indique el Nombre al que responde el animal.Se requiere un caractér como mínimo a un máximo de 25.
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="4" controlId="validationCustom02">
                             <Form.Label>Tipo</Form.Label>
@@ -90,11 +251,13 @@ const Formulario = () => {
                                 required
                                 type="text"
                                 placeholder="Tipo de animal"
-                                onBlur={handleBlur}
+                                onBlur={() => validarType(form.petType)}
                                 onChange={handleChange}
                                 value={form.petType}
                             />
-                            <Form.Control.Feedback type="invalid">Detalle el tipo de animal que es la mascota</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayPetType }}>
+                                Detalle el tipo de animal que es la mascota. Se requiere 3 caractéres como mínimo a un máximo de 20.
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="2" controlId="validationCustom02">
                             <Form.Label>Edad</Form.Label>
@@ -103,11 +266,13 @@ const Formulario = () => {
                                 required
                                 type="number"
                                 placeholder="Edad"
-                                onBlur={handleBlur}
+                                onBlur={() => validarPetAge(form.petAge)}
                                 onChange={handleChange}
                                 value={form.petAge}
                             />
-                            <Form.Control.Feedback type="invalid">Indique una edad aproximada</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayPetAge }}>
+                                Indique una edad aproximada
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="12" controlId="validationCustom02">
                             <Form.Label>Sintomatología</Form.Label>
@@ -116,11 +281,13 @@ const Formulario = () => {
                                 required
                                 as="textarea"
                                 placeholder="Sintomas"
-                                onBlur={handleBlur}
+                                onBlur={() => validarSymptom(form.petSymptom)}
                                 onChange={handleChange}
                                 value={form.petSymptom}
                             />
-                            <Form.Control.Feedback type="invalid">Indica brevemente los sintomas que presenta</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayPetSymptom }}>
+                                Indica brevemente los sintomas que presenta
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
                     <Form.Label className="mt-1 lead text-success">Datos del dueño</Form.Label>
@@ -132,11 +299,13 @@ const Formulario = () => {
                                 required
                                 type="text"
                                 placeholder="Nombre del dueño"
-                                onBlur={handleBlur}
+                                onBlur={() => validarOwnName(form.ownName)}
                                 onChange={handleChange}
                                 value={form.ownName}
                             />
-                            <Form.Control.Feedback type="invalid">Indique el nombre del dueño de la mascota</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayOwnName }}>
+                                Indique el nombre del dueño de la mascota
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="4" controlId="validationCustom02">
                             <Form.Label>Telefono</Form.Label>
@@ -145,11 +314,13 @@ const Formulario = () => {
                                 required
                                 type="number"
                                 placeholder="155-123456"
-                                onBlur={handleBlur}
+                                onBlur={() => validarPhone(form.ownPhone)}
                                 onChange={handleChange}
                                 value={form.ownPhone}
                             />
-                            <Form.Control.Feedback type="invalid">Suministre un telefono de contacto</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayOwnPhone }}>
+                                Suministre un telefono de contacto
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                             <Form.Label>Email</Form.Label>
@@ -161,11 +332,13 @@ const Formulario = () => {
                                     placeholder="Correo electronico"
                                     aria-describedby="inputGroupPrepend"
                                     required
-                                    onBlur={handleBlur}
+                                    onBlur={() => validarEmail(form.ownEmail)}
                                     onChange={handleChange}
                                     value={form.ownEmail}
                                 />
-                                <Form.Control.Feedback type="invalid">Suministre email</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid" style={{ display: displayOwnEmail }}>
+                                    Suministre email
+                                </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
                         <Form.Group as={Col} md="6" controlId="validationCustom03">
@@ -175,11 +348,13 @@ const Formulario = () => {
                                 type="text"
                                 placeholder="Dirección"
                                 required
-                                onBlur={handleBlur}
+                                onBlur={() => validarAdress(form.ownAdress)}
                                 onChange={handleChange}
                                 value={form.ownAdress}
                             />
-                            <Form.Control.Feedback type="invalid">Indique la dirección donde vive con la mascota</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayOwnAdress }}>
+                                Indique la dirección donde vive con la mascota
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="3" controlId="validationCustom05">
                             <Form.Label>Ciudad</Form.Label>
@@ -188,11 +363,13 @@ const Formulario = () => {
                                 type="text"
                                 placeholder="Ciudad"
                                 required
-                                onBlur={handleBlur}
+                                onBlur={() => validarCity(form.ownCity)}
                                 onChange={handleChange}
                                 value={form.ownCity}
                             />
-                            <Form.Control.Feedback type="invalid">Indique la ciudad donde vive con la mascota.</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayOwnCity }}>
+                                Indique la ciudad donde vive con la mascota.
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="2" controlId="validationCustom05">
                             <Form.Label>CP</Form.Label>
@@ -201,11 +378,13 @@ const Formulario = () => {
                                 type="number"
                                 placeholder="Cod. Postal"
                                 required
-                                onBlur={handleBlur}
+                                onBlur={() => validarZip(form.ownZip)}
                                 onChange={handleChange}
                                 value={form.ownZip}
                             />
-                            <Form.Control.Feedback type="invalid">Indique el codigo postal donde vive con la mascota.</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayOwnZip }}>
+                                Indique el codigo postal donde vive con la mascota.
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
                     <Form.Label className="mt-1 lead text-success">Turno</Form.Label>
@@ -217,11 +396,13 @@ const Formulario = () => {
                                 required
                                 type="date"
                                 placeholder="dd/mm/aaaa"
-                                onBlur={handleBlur}
+                                onBlur={() => validarDate(form.appointmentDate)}
                                 onChange={handleChange}
                                 value={form.appointmentDate}
                             />
-                            <Form.Control.Feedback type="invalid">Indique el día que asistirá la mascota</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayDate }}>
+                                Indique el día que asistirá la mascota
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md="4" controlId="validationCustom02">
                             <Form.Label>Hora</Form.Label>
@@ -230,11 +411,13 @@ const Formulario = () => {
                                 required
                                 type="time"
                                 placeholder="hh:mm"
-                                onBlur={handleBlur}
+                                onBlur={() => validarTime(form.appointmentTime)}
                                 onChange={handleChange}
                                 value={form.appointmentTime}
                             />
-                            <Form.Control.Feedback type="invalid">Indique el horario de atención</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" style={{ display: displayTime }}>
+                                Indique el horario de atención
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
                     <div className="text-center">
